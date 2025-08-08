@@ -3,9 +3,7 @@
 
 A modern and scalable e-commerce platform built with **Next.js**, **Prisma ORM**, **MySQL**, and containerized using **Docker**. Includes Clerk authentication, an admin dashboard, and a responsive frontend.
 
-
-
-## 📚 Table of Contents
+## Table of Contents
 
 - [Features](#-features)
 - [Getting Started](#-getting-started)
