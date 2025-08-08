@@ -69,7 +69,7 @@ Make sure Docker is running, then:
 docker-compose up -d
 ```
 
-### ⚙️ Docker Services Configured
+### Docker Services Configured
 
 | Service | Port   | Description            |
 | ------- | ------ | ---------------------- |
