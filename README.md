@@ -5,23 +5,21 @@ A modern and scalable e-commerce platform built with **Next.js**, **Prisma ORM**
 
 ## Table of Contents
 
-- [Features](#-features)
-- [Getting Started](#-getting-started)
-  - [Install Dependencies](#-install-dependencies)
-- [Docker + MySQL](#-docker--mysql)
-  - [Docker Services Configured](#️-docker-services-configured)
-  - [MySQL Credentials](#-mysql-credentials)
-- [Environment Variables](#-environment-variables)
-- [Prisma & Database Setup](#-prisma--database-setup)
-- [Run Dev Server](#-run-dev-server)
-- [Adminer DB UI](#-adminer-db-ui)
-- [Project Structure](#-project-structure)
-- [Deployment](#️-deployment)
-- [Common Scripts](#-common-scripts)
-- [Resources](#-resources)
-- [Author](#-author)
-
-
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Install Dependencies](#install-dependencies)
+- [Docker + MySQL](#docker--mysql)
+  - [Docker Services Configured](#docker-services-configured)
+  - [MySQL Credentials](#mysql-credentials)
+- [Environment Variables](#environment-variables)
+- [Prisma & Database Setup](#prisma--database-setup)
+- [Run Dev Server](#run-dev-server)
+- [Adminer DB UI](#adminer-db-ui)
+- [Project Structure](#project-structure)
+- [Deployment](#deployment)
+- [Common Scripts](#common-scripts)
+- [Resources](#resources)
+- [Author](#author)
 
 ## Features
 
