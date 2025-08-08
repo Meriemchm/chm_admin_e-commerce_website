@@ -1,7 +1,3 @@
-Parfait ! Voici une version **détaillée et complète** de ton `README.md`, adaptée à ton **projet e-commerce avec Next.js, Prisma, Docker et MySQL**. Elle inclut les sections indispensables : description, installation, configuration, architecture, base de données, développement, déploiement, et bien plus.
-
----
-
 ````md
 # 🛍️ E-Commerce Platform (Next.js + Prisma + Docker + MySQL)
 
@@ -138,7 +134,7 @@ Use the following settings:
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 .
@@ -155,7 +151,7 @@ Use the following settings:
 
 ---
 
-## ☁️ Deployment (Coming Soon)
+## Deployment (Coming Soon)
 
 You can deploy your frontend (Next.js) on platforms like:
 
@@ -171,7 +167,7 @@ DATABASE_URL="mysql://username:password@your-remote-host:3306/dbname"
 
 ---
 
-## 🧼 Scripts
+## Scripts
 
 | Command                | Description                  |
 | ---------------------- | ---------------------------- |
@@ -182,7 +178,7 @@ DATABASE_URL="mysql://username:password@your-remote-host:3306/dbname"
 
 ---
 
-## 📚 Resources
+## Resources
 
 * [Next.js Docs](https://nextjs.org/docs)
 * [Prisma Docs](https://www.prisma.io/docs)
@@ -191,7 +187,7 @@ DATABASE_URL="mysql://username:password@your-remote-host:3306/dbname"
 
 ---
 
-## ✨ Author
+## Author
 
 Made by **Meriem Chami**
 
