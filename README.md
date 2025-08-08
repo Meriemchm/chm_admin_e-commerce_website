@@ -1,5 +1,4 @@
 
-````md
 ## E-Commerce Platform (Next.js + Prisma + Docker + MySQL)
 
 A modern and scalable e-commerce platform built with **Next.js**, **Prisma ORM**, **MySQL**, and containerized using **Docker**. Includes Clerk authentication, an admin dashboard, and a responsive frontend.
@@ -46,7 +45,7 @@ A modern and scalable e-commerce platform built with **Next.js**, **Prisma ORM**
 ```bash
 git clone https://github.com/your-username/your-project-name.git
 cd your-project-name
-````
+
 
 ### Install Dependencies
 
