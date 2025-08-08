@@ -203,7 +203,4 @@ DATABASE_URL="mysql://user:password@remote-host:3306/dbname"
 Made by **Meriem Chami**
 
 ---
-```
 
----
-```
