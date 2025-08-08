@@ -1,4 +1,3 @@
----
 
 ````md
 # E-Commerce Platform (Next.js + Prisma + Docker + MySQL)
