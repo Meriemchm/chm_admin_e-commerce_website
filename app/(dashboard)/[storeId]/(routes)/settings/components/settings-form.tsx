@@ -4,6 +4,7 @@ import { Store } from "@/lib/generated/prisma";
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
@@ -18,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { tr } from "zod/v4/locales";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -30,22 +32,34 @@ const formSchema = z.object({
 type SettingsFormValues = z.infer<typeof formSchema>;
 
 export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
-  const [open, setOpen] = useState();
-  const [loading, setLoading] = useState();
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
   });
+
   const onSubmit = async (data: SettingsFormValues) => {
-    console.log(data);
+    try {
+      const res = await axios.patch(`/api/stores/${initialData.id}`, data);
+      console.log("Store updated:", res.data);
+    } catch (error) {
+      console.error("Error updating store:", error);
+    }
   };
+
   return (
     <>
       <div className="flex items-center justify-between px-5 py-5">
         {" "}
         <Heading title="Settings" description="Manage store preferences" />
-        <Button variant="destructive" size="sm" onClick={() => {}}>
+        <Button
+          disabled={loading}
+          variant="destructive"
+          size="sm"
+          onClick={() => setOpen(true)}
+        >
           {" "}
           <Trash className="h-4 w-4" />{" "}
         </Button>
@@ -58,7 +72,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-4 w-full px-5 py-5"
         >
-          <div className="grid grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             <FormField
               control={form.control}
               name="name"
@@ -72,7 +86,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage/>
+                  <FormMessage />
                 </FormItem>
               )}
             ></FormField>
