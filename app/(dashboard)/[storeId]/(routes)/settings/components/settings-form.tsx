@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { tr } from "zod/v4/locales";
 import toast from "react-hot-toast";
 import { AlertModal } from "@/components/modals/alert-modal";
+import { ApiAlert } from "@/components/ui/api-alert";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -83,7 +84,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         loading={loading}
         storeName={initialData.name}
       />
-      <div className="flex items-center justify-between px-5 py-5">
+      <div className="flex items-center justify-between py-5">
         {" "}
         <Heading title="Settings" description="Manage store preferences" />
         <Button
@@ -102,7 +103,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 w-full px-5 py-5"
+          className="space-y-4 w-full py-5"
         >
           <div className="grid md:grid-cols-3 gap-8">
             <FormField
@@ -128,6 +129,8 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
           </Button>
         </form>
       </Form>
+      <Separator />
+      <ApiAlert title={"NEXT_PUBLIC_API_URL"} description={"test"} variant={"public"} />
     </>
   );
 };
