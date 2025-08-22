@@ -1,7 +1,7 @@
 
-## E-Commerce Platform (Next.js + Prisma + Docker + MySQL)
+## Admin dashboard for e-Commerce Platform (Next.js + Prisma + Docker + MySQL)
 
-A modern and scalable e-commerce platform built with Next.js, Prisma ORM, MySQL, and containerized using Docker. It includes:
+A modern and scalable admin dashboard for e-commerce platform built with Next.js, Prisma ORM, MySQL, and containerized using Docker. It includes:
 
 -Clerk for secure authentication
 
