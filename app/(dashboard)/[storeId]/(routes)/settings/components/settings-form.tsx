@@ -86,7 +86,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         loading={loading}
         storeName={initialData.name}
       />
-      <div className="flex items-center justify-between py-5">
+      <div className="flex items-center justify-between">
         {" "}
         <Heading title="Settings" description="Manage store preferences" />
         <Button
