@@ -1,3 +1,5 @@
+"use client";
+
 import { Copy, Server } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "./alert";
 import { Badge, type BadgeProps } from "./badge";
@@ -25,11 +27,10 @@ export const ApiAlert: React.FC<ApiAlertProps> = ({
   description,
   variant = "public",
 }) => {
-  const onCopy = () =>{
-    navigator.clipboard.writeText(description)
-    toast.success("API Route copied.")
-
-  }
+  const onCopy = () => {
+    navigator.clipboard.writeText(description);
+    toast.success("API Route copied.");
+  };
   return (
     <div className="py-5">
       <Alert>
@@ -44,7 +45,13 @@ export const ApiAlert: React.FC<ApiAlertProps> = ({
           <code className="relative rounded bg-muted px-[0.3rem ] py-[0.2rem] font-mono text-sm font-semibold">
             {description}
           </code>{" "}
-          <Button variant={"outline"} size={"icon"} onClick={() => {onCopy()}}>
+          <Button
+            variant={"outline"}
+            size={"icon"}
+            onClick={() => {
+              onCopy();
+            }}
+          >
             <Copy className="h-4 w-4" />
           </Button>
         </AlertDescription>

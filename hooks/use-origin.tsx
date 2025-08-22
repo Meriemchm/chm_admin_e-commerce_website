@@ -7,6 +7,7 @@ export const useOrigin = () => {
       ? window.location.origin
       : "";
 
+  // client side
   useEffect(() => {
     setMounted(true);
   }, []);
