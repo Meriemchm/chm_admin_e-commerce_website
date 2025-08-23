@@ -336,12 +336,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               render={({ field }) => (
                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                   <FormControl>
-                    {" "}
-                    <Checkbox
-                      disabled={loading}
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
+                    <div>
+                      <Checkbox
+                        disabled={loading}
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </div>
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormLabel>Featured</FormLabel>
@@ -359,12 +360,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               render={({ field }) => (
                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                   <FormControl>
-                    {" "}
-                    <Checkbox
-                      disabled={loading}
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
+                    <div>
+                      <Checkbox
+                        disabled={loading}
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </div>
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormLabel>Archived</FormLabel>

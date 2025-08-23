@@ -11,12 +11,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { toast } from "react-hot-toast";
-import { billboardColumn } from "./columns";
+import { productColumn } from "./columns";
 import axios from "axios";
 import { AlertModal } from "@/components/modals/alert-modal";
 
 interface CellActionProps {
-  data: billboardColumn;
+  data: productColumn;
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
 }
@@ -34,7 +34,7 @@ export const CellAction: React.FC<CellActionProps> = ({
 
   const handleCopy = () => {
     navigator.clipboard.writeText(data.id);
-    toast.success("Billboard ID copied to clipboard.");
+    toast.success("Product ID copied to clipboard.");
   };
 
   const handleEdit = () => {
@@ -45,12 +45,12 @@ export const CellAction: React.FC<CellActionProps> = ({
     try {
       setLoading(true);
       await axios.delete(
-        `/api/${params.storeId}/billboards/${data.id}`
+        `/api/${params.storeId}/products/${data.id}`
       );
       router.refresh();
-      toast.success("billboard deleted");
+      toast.success("product deleted");
     } catch (error) {
-      toast.error("make sure you remove all categories using this billboard.");
+      toast.error("something went wrong.");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -64,7 +64,7 @@ export const CellAction: React.FC<CellActionProps> = ({
         onClose={() => setOpen(false)}
         onConfirm={handleDelete}
         loading={loading}
-        storeName={data.label}
+        storeName={data.name}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -80,7 +80,7 @@ export const CellAction: React.FC<CellActionProps> = ({
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/billboards/${data.id}`)
+              router.push(`/${params.storeId}/products/${data.id}`)
             }
           >
             <Edit className="mr-2 h-4 w-4" /> Edit
