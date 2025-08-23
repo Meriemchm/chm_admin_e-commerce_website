@@ -16,7 +16,7 @@ export const columns: ColumnDef<billboardColumn>[] = [
   },
   {
     accessorKey: "createdAt",
-    header: "CreatedAt",
+    header: "Date",
   },
   {
     id: "actions",
