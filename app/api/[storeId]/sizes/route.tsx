@@ -61,7 +61,7 @@ export async function GET(
     }
 
     const sizes = await prismadb.size.findMany({
-      where: { id: params.storeId },
+      where: { storeId: params.storeId },
     });
 
     return NextResponse.json(sizes);

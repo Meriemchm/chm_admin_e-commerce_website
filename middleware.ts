@@ -1,13 +1,18 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
 const isPublicRoute = createRouteMatcher([
-  "/api/:path*", 
+  "/api/:path*", // toutes les routes API publiques
 ]);
 
 export default clerkMiddleware((auth, req) => {
   if (isPublicRoute(req)) {
-    return;
+    return NextResponse.next(); // 👈 continuer sans exiger auth
   }
+
+  // sinon, tu pourrais protéger certaines routes :
+  // auth().protect();
+  return NextResponse.next();
 });
 
 export const config = {

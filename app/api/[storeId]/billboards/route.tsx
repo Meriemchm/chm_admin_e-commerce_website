@@ -60,8 +60,8 @@ export async function GET(
       return new NextResponse("Store ID is required", { status: 400 });
     }
 
-    const billboards = await prismadb.store.findMany({
-      where: { id: params.storeId },
+    const billboards = await prismadb.billboard.findMany({
+      where: { storeId: params.storeId },
     });
 
     return NextResponse.json(billboards);

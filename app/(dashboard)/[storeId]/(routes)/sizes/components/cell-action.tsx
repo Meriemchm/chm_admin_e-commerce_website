@@ -37,10 +37,6 @@ export const CellAction: React.FC<CellActionProps> = ({
     toast.success("Size ID copied to clipboard.");
   };
 
-  const handleEdit = () => {
-    onEdit(data.id);
-  };
-
   const handleDelete = async () => {
     try {
       setLoading(true);
@@ -48,7 +44,7 @@ export const CellAction: React.FC<CellActionProps> = ({
         `/api/${params.storeId}/sizes/${data.id}`
       );
       router.refresh();
-      toast.success("billboard deleted");
+      toast.success("size deleted");
     } catch (error) {
       toast.error("make sure you remove all .");
     } finally {
