@@ -21,7 +21,7 @@ export const columns: ColumnDef<colorColumn>[] = [
     cell: ({ row }) => (
       <div
         className="flex items-center gap-x-2"
-        style={{ backgroundColor: row.original.value }}
+       
       >
         {row.original.value}{" "}
         <div
