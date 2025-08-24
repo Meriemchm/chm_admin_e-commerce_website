@@ -38,7 +38,7 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 403 });
     }
 
-    const size = await prismadb.size.update({
+    const size = await prismadb.size.updateMany({
       where: { id: params.sizeId },
       data: {
         name,

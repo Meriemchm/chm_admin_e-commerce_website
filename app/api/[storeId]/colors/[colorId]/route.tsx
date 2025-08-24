@@ -38,7 +38,7 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 403 });
     }
 
-    const color = await prismadb.color.update({
+    const color = await prismadb.color.updateMany({
       where: { id: params.colorId },
       data: {
         name,
