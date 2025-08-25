@@ -93,11 +93,14 @@ export async function GET(
       where: {
         id: params.categoryId,
       },
+      include:{
+        billboard: true,
+      }
     });
 
     return NextResponse.json(category);
   } catch (error) {
-    console.error("[CATEGORIES_GET]", error);
+    console.error("[CATEGORY_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
