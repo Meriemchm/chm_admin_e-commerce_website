@@ -1,36 +1,61 @@
 import { UserButton } from "@clerk/nextjs";
-import React from "react";
-import { ItemsNav } from "@/components/Sidebar/items-nav";
-import StoreSwitcher from "./store-switcher";
 import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+
 import prismadb from "@/lib/prismadb";
+import { redirect } from "next/navigation";
+
+import { Menu } from "lucide-react";
+import StoreSwitcher from "./store-switcher";
+import { ItemsNav } from "@/components/Sidebar/items-nav";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet"; // shadcn
+import { SideBarContainer } from "./side-bar-container";
 
 const Sidebar = async () => {
   const { userId } = await auth();
   if (!userId) {
     redirect("/sign-in");
   }
-
   const stores = await prismadb.store.findMany({
     where: { userId },
   });
 
   return (
-    <div className="fixed left-0 top-0 h-screen w-64 bg-white shadow-md flex flex-col justify-between">
-      {/* Partie haute */}
-      <div className="p-4">
-        <StoreSwitcher items={stores} />
-        <div className="mt-6">
-          <ItemsNav className="flex flex-col space-y-4" />
-        </div>
+    <>
+      {/* Desktop sidebar */}
+      <div className="hidden md:flex fixed left-0 top-0 h-screen w-64 bg-white shadow-md flex-col justify-between">
+        {/* Partie haute */}
+        <SideBarContainer stores={stores} />
       </div>
 
-      {/* Partie basse (user button) */}
-      <div className="p-4 border-t">
-        <UserButton />
+      {/* Mobile sidebar */}
+      <div className="md:hidden p-2">
+        <Sheet>
+          <SheetTrigger asChild>
+            <button className="p-2 border rounded-md shadow-sm">
+              <Menu className="w-6 h-6" />
+            </button>
+          </SheetTrigger>
+          <SheetContent
+            side="left"
+            className="flex flex-col p-4 w-64"
+          >
+            {/* Header du drawer (optionnel) */}
+            <SheetHeader>
+              <SheetTitle></SheetTitle>
+            </SheetHeader>
+
+            {/* Partie haute */}
+            <SideBarContainer stores={stores} />
+          </SheetContent>
+        </Sheet>
       </div>
-    </div>
+    </>
   );
 };
 
