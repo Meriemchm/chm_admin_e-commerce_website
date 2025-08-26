@@ -126,7 +126,6 @@ model Image {
 
 model Order {
   id String @id @default(uuid())
-  userId String
   storeId String
   store Store @relation("StoreToOrder", fields: [storeId], references: [id])
   orderItems OrderItem[]
