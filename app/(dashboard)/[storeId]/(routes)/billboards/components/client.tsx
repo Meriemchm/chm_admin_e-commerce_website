@@ -29,6 +29,7 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
         />
         <Button
           onClick={() => router.push(`/${params.storeId}/billboards/new`)}
+          className="bg-[#238636] text-white hover:bg-[#238636]/80"
         >
           <Plus className="mr-2 h-4 w-4" />
           Add New

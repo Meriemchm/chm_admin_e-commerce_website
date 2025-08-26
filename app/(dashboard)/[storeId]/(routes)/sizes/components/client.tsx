@@ -26,6 +26,7 @@ export const SizeClient: React.FC<SizeClientProps> = ({ data }) => {
         />
         <Button
           onClick={() => router.push(`/${params.storeId}/sizes/new`)}
+          className="bg-[#238636] text-white hover:bg-[#238636]/80"
         >
           <Plus className="mr-2 h-4 w-4" />
           Add New

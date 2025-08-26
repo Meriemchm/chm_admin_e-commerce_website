@@ -29,6 +29,7 @@ export const ProductClient: React.FC<ProductClientProps> = ({ data }) => {
         />
         <Button
           onClick={() => router.push(`/${params.storeId}/products/new`)}
+          className="bg-[#238636] text-white hover:bg-[#238636]/80"
         >
           <Plus className="mr-2 h-4 w-4" />
           Add New
