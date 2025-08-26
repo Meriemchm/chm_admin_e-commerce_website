@@ -14,7 +14,8 @@ export const SideBarContainer: React.FC<SideBarContainerProps> = ({
   return (
     <>
       <div className="md:p-4">
-        <StoreSwitcher items={stores} />
+        {/* <StoreSwitcher items={stores} /> */}
+        <h2 className="uppercase md:text-3xl  "> {stores[0]?.name} </h2>
         <div className="mt-6">
           <ItemsNav className="flex flex-col space-y-4" />
         </div>
@@ -23,7 +24,7 @@ export const SideBarContainer: React.FC<SideBarContainerProps> = ({
       {/* Partie basse (user button) */}
       <div className="p-4 border-t">
         <div className="flex justify-between ">
-          <UserButton />
+          <UserButton  />
           <ModeToggle />
         </div>
       </div>
