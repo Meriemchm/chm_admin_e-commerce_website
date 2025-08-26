@@ -2,12 +2,15 @@ import { UserButton } from "@clerk/nextjs";
 import { ItemsNav } from "./items-nav";
 import StoreSwitcher from "./store-switcher";
 import { Store } from "@/lib/generated/prisma";
+import { ModeToggle } from "../mode-toggle";
 
 interface SideBarContainerProps {
   stores: Store[];
 }
 
-export const SideBarContainer: React.FC<SideBarContainerProps> = ({stores}) => {
+export const SideBarContainer: React.FC<SideBarContainerProps> = ({
+  stores,
+}) => {
   return (
     <>
       <div className="md:p-4">
@@ -19,7 +22,10 @@ export const SideBarContainer: React.FC<SideBarContainerProps> = ({stores}) => {
 
       {/* Partie basse (user button) */}
       <div className="p-4 border-t">
-        <UserButton />
+        <div className="flex justify-between ">
+          <UserButton />
+          <ModeToggle />
+        </div>
       </div>
     </>
   );

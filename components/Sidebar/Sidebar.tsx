@@ -28,7 +28,7 @@ const Sidebar = async () => {
   return (
     <>
       {/* Desktop sidebar */}
-      <div className="hidden md:flex fixed left-0 top-0 h-screen w-64 bg-white shadow-md flex-col justify-between">
+      <div className="hidden md:flex fixed left-0 top-0 h-screen w-64 bg-white shadow-md flex-col justify-between dark:text-white dark:bg-neutral-900">
         {/* Partie haute */}
         <SideBarContainer stores={stores} />
       </div>
