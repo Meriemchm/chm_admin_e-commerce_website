@@ -8,9 +8,9 @@ export default async function DashboardLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ storeId: string }>; // Ici on dit que params est une Promise
+  params: Promise<{ storeId: string }>; 
 }) {
-  const { storeId } = await params; // On attend params
+  const { storeId } = await params; 
   const { userId } = await auth();
 
   if (!userId) {
