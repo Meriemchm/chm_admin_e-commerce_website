@@ -8,7 +8,7 @@ const ProductPage = async ({
 }) => {
   const product = await prismadb.product.findUnique({
     where: { id: params.productId },
-    include: { images: true },
+    include: { images: true, sizes: true, colors: true },
   });
 
   const categories = await prismadb.category.findMany({
@@ -21,6 +21,14 @@ const ProductPage = async ({
     where: { storeId: params.storeId },
   });
 
+  // ⚡ On transforme le Decimal en number pour React
+  const safeProduct = product
+    ? {
+        ...product,
+        price: parseFloat(String(product.price)),
+      }
+    : null;
+
   return (
     <div className="flex-col ">
       <div className="flex-1 space-y-4 py-5">
@@ -28,7 +36,7 @@ const ProductPage = async ({
           categories={categories}
           sizes={sizes}
           colors={colors}
-          initialData={product}
+          initialData={safeProduct} 
         />
       </div>
     </div>

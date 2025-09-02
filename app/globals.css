@@ -120,3 +120,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+.currentColor {
+  color: #808080; /* l'icône devient rouge */
+}
+

@@ -1,3 +1,4 @@
+import { DashboardLayoutWrapper } from "@/components/dashboard-layout-wrapper";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs/server";
@@ -8,9 +9,9 @@ export default async function DashboardLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ storeId: string }>; 
+  params: Promise<{ storeId: string }>;
 }) {
-  const { storeId } = await params; 
+  const { storeId } = await params;
   const { userId } = await auth();
 
   if (!userId) {
@@ -28,17 +29,5 @@ export default async function DashboardLayout({
     redirect("/");
   }
 
-  return (
-    <>
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="w-64">
-          <Sidebar />
-        </div>
-
-        {/* Contenu */}
-        <div className="flex-1 px-5">{children}</div>
-      </div>
-    </>
-  );
+  return <DashboardLayoutWrapper>{children}</DashboardLayoutWrapper>;
 }

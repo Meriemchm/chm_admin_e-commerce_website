@@ -6,7 +6,9 @@ import DashCard from "@/components/dash-card";
 import { Overview } from "@/components/overview";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
+import { WelcomeCard } from "@/components/welcome-card";
 import { CreditCard, EuroIcon, Package } from "lucide-react";
+
 
 import React from "react";
 
@@ -19,6 +21,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
   const salesCount = await getSalesCount(params.storeId);
   const stockCount = await getStockCount(params.storeId);
   const graphRevenue = await getGraphRevenue(params.storeId)
+  
 
   const dashItems = [
     {
@@ -43,13 +46,22 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
 
   return (
     <div className="flex-col">
-      <div className="flex-1 space-y-4 p-8 pt-6">
+      <div className="flex-1 space-y-4 py-5">
+
+
         <Heading title={"Dashboard"} description={"Overview of your store."} />
+
+
+        <WelcomeCard  />
+
+
         <div className="grid gap-4 grid-cols-3">
           {dashItems.map((item) => (
             <DashCard key={item.id} data={item} />
           ))}
         </div>
+
+
         <Card className="col-span-4 ">
           <CardHeader>
             <CardTitle>Overview</CardTitle>

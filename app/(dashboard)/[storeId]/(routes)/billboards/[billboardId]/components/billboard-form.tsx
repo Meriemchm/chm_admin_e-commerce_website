@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
-import ImageUpload from "@/components/ui/image-upload";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 interface BillboardFormProps {
   initialData: Billboard | null;
@@ -136,11 +136,11 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
               <FormItem>
                 <FormLabel>Background image</FormLabel>
                 <FormControl>
-                  <ImageUpload
+                  <ImageUpload<string>
                     disabled={loading}
+                    value={field.value || ""}
                     onChange={(url) => field.onChange(url)}
                     onRemove={() => field.onChange("")}
-                    value={field.value ? [field.value] : []}
                   />
                 </FormControl>
                 <FormMessage />

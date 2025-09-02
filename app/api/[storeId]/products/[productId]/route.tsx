@@ -15,8 +15,8 @@ export async function PATCH(
       name,
       price,
       categoryId,
-      sizeId,
-      colorId,
+      sizeIds,
+      colorIds,
       isFeatured,
       isArchived,
       images,
@@ -34,11 +34,11 @@ export async function PATCH(
     if (!categoryId) {
       return new NextResponse("category Id is required", { status: 400 });
     }
-    if (!sizeId) {
-      return new NextResponse("size Id is required", { status: 400 });
+    if (!sizeIds || !sizeIds.length) {
+      return new NextResponse("size Ids are required", { status: 400 });
     }
-    if (!colorId) {
-      return new NextResponse("color Id is required", { status: 400 });
+    if (!colorIds || !colorIds.length) {
+      return new NextResponse("color Ids are required", { status: 400 });
     }
     if (!images || !images.length) {
       return new NextResponse("Images is required", { status: 400 });
@@ -49,7 +49,6 @@ export async function PATCH(
     }
 
     // Check if the store belongs to the user
-
     const storeByUserId = await prismadb.store.findFirst({
       where: { id: params.storeId, userId: userId },
     });
@@ -64,8 +63,12 @@ export async function PATCH(
         name,
         price,
         categoryId,
-        sizeId,
-        colorId,
+        sizes: {
+          set: sizeIds.map((id: string) => ({ id })),
+        },
+        colors: {
+          set: colorIds.map((id: string) => ({ id })),
+        },
         isFeatured,
         isArchived,
         storeId: params.storeId,
@@ -133,8 +136,8 @@ export async function GET(
       include: {
         images: true,
         category: true,
-        size: true,
-        color: true,
+        sizes: true,
+        colors: true,
       },
     });
 

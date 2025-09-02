@@ -11,7 +11,7 @@ export type productColumn = {
   price: string;
   category: string | null;
   size: string | null;
-  color: string | null;
+  color: string[] | null;
   createdAt: string;
 };
 
@@ -45,11 +45,14 @@ export const columns: ColumnDef<productColumn>[] = [
     header: "Color",
     cell: ({ row }) => (
       <div className="flex items-center gap-x-2">
-        {row.original.color}
-        <div
-          className="h-6 w-6 rounded-full"
-          style={row.original.color ? { backgroundColor: row.original.color } : undefined}
-        />
+        {Array.isArray(row.original.color) &&
+          row.original.color.map((color: string, index: number) => (
+            <div
+              key={index}
+              className="h-6 w-6 rounded-full"
+              style={{ backgroundColor: color }}
+            />
+          ))}
       </div>
     ),
   },

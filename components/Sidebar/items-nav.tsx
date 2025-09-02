@@ -16,14 +16,13 @@ import {
   PackageIcon,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useSidebarStore } from "@/hooks/use-side-bar";
 
-export function ItemsNav({
-  className,
-  ...props
-}: React.HtmlHTMLAttributes<HTMLElement>) {
+export function ItemsNav({ className, ...props }: any) {
   const pathname = usePathname();
   const params = useParams();
   const [isAttributesOpen, setIsAttributesOpen] = useState(false);
+  const { collapsed } = useSidebarStore();
 
   const [isMounted, setIsMounted] = useState(false);
 
@@ -32,7 +31,6 @@ export function ItemsNav({
   }, []);
 
   if (!isMounted) {
-
     return null;
   }
 
@@ -104,7 +102,7 @@ export function ItemsNav({
           )}
         >
           {route.icon}
-          {route.label}
+          {!collapsed && route.label}
         </Link>
       ))}
 
@@ -117,13 +115,13 @@ export function ItemsNav({
       >
         <span className="flex items-center gap-2">
           <LayoutDashboardIcon size={16} />
-          Attributes
+          {!collapsed && <p>Attributes</p>}
         </span>
         {isAttributesOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
       </button>
 
       {isAttributesOpen && (
-        <div className="ml-6 flex flex-col space-y-1">
+        <div className={cn(" flex flex-col space-y-1", collapsed ? "ml-0": "ml-6")}>
           {routesCollapsible.map((route) => (
             <Link
               key={route.href}
@@ -136,7 +134,7 @@ export function ItemsNav({
               )}
             >
               {route.icon}
-              {route.label}
+              {!collapsed && route.label}
             </Link>
           ))}
         </div>

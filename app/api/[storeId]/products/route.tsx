@@ -3,7 +3,6 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 // create product
-
 export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }
@@ -15,39 +14,26 @@ export async function POST(
       name,
       price,
       categoryId,
-      sizeId,
-      colorId,
+      sizeIds,   // array
+      colorIds,  // array
       isFeatured,
       isArchived,
       images,
     } = body;
 
+    console.log({ name, price, categoryId, images, colorIds, sizeIds, isFeatured, isArchived });
+
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 401 });
     }
 
-    if (!name) {
-      return new NextResponse("name is required", { status: 400 });
-    }
-    if (!price) {
-      return new NextResponse("price is required", { status: 400 });
-    }
-    if (!categoryId) {
-      return new NextResponse("category Id is required", { status: 400 });
-    }
-    if (!sizeId) {
-      return new NextResponse("size Id is required", { status: 400 });
-    }
-    if (!colorId) {
-      return new NextResponse("color Id is required", { status: 400 });
-    }
-    if (!images || !images.length) {
-      return new NextResponse("Images is required", { status: 400 });
-    }
-
-    if (!params.storeId) {
-      return new NextResponse("store ID is required", { status: 400 });
-    }
+    if (!name) return new NextResponse("name is required", { status: 400 });
+    if (!price) return new NextResponse("price is required", { status: 400 });
+    if (!categoryId) return new NextResponse("category Id is required", { status: 400 });
+    if (!sizeIds || !sizeIds.length) return new NextResponse("size Ids are required", { status: 400 });
+    if (!colorIds || !colorIds.length) return new NextResponse("color Ids are required", { status: 400 });
+    if (!images || !images.length) return new NextResponse("Images are required", { status: 400 });
+    if (!params.storeId) return new NextResponse("store ID is required", { status: 400 });
 
     const storeByUserId = await prismadb.store.findFirst({
       where: { id: params.storeId, userId: userId },
@@ -62,8 +48,6 @@ export async function POST(
         name,
         price,
         categoryId,
-        sizeId,
-        colorId,
         isFeatured,
         isArchived,
         storeId: params.storeId,
@@ -72,6 +56,18 @@ export async function POST(
             data: [...images.map((image: { url: string }) => image)],
           },
         },
+        colors: {
+          connect: colorIds.map((id: string) => ({ id })),
+        },
+        sizes: {
+          connect: sizeIds.map((id: string) => ({ id })),
+        },
+      },
+      include: {
+        images: true,
+        category: true,
+        colors: true,
+        sizes: true,
       },
     });
 
@@ -92,6 +88,7 @@ export async function GET(
     const colorId = searchParams.get("colorId") || undefined;
     const sizeId = searchParams.get("sizeId") || undefined;
     const isFeatured = searchParams.get("isFeatured");
+
     if (!params.storeId) {
       return new NextResponse("Store ID is required", { status: 400 });
     }
@@ -100,16 +97,16 @@ export async function GET(
       where: {
         storeId: params.storeId,
         categoryId,
-        colorId,
-        sizeId,
         isFeatured: isFeatured ? true : undefined,
         isArchived: false,
+        ...(colorId && { colors: { some: { id: colorId } } }),
+        ...(sizeId && { sizes: { some: { id: sizeId } } }),
       },
       include: {
         images: true,
         category: true,
-        color: true,
-        size: true,
+        colors: true,
+        sizes: true,
       },
       orderBy: {
         createdAt: "desc",

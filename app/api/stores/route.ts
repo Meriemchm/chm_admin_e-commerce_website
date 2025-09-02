@@ -34,3 +34,26 @@ export async function POST(req: Request) {
     return new NextResponse("Internal error", { status: 500 });
   }
 }
+
+
+export async function GET() {
+  try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const stores = await prismadb.store.findMany({
+      where: { userId },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return NextResponse.json(stores);
+  } catch (error) {
+    console.error("[STORES_GET]", error);
+    return new NextResponse("Internal error", { status: 500 });
+  }
+}
+
+

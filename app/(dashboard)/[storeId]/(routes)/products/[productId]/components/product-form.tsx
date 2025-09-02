@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
-import ImageUpload from "@/components/ui/image-upload";
+import { ImageUpload } from "@/components/ui/image-upload";
 import {
   Select,
   SelectContent,
@@ -35,8 +35,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 interface ProductFormProps {
   initialData:
-    | (Product & {
+    | (Omit<Product, "price"> & {
+        price: number; 
         images: Image[];
+        sizes: Size[];
+        colors: Color[];
       })
     | null;
   categories: Category[];
@@ -49,8 +52,8 @@ const formSchema = z.object({
   images: z.object({ url: z.string() }).array(),
   price: z.coerce.number().min(1),
   categoryId: z.string().min(1),
-  colorId: z.string().min(1),
-  sizeId: z.string().min(1),
+  colorIds: z.array(z.string()).min(1, "Select at least one color"),
+  sizeIds: z.array(z.string()).min(1, "Select at least one size"),
   isFeatured: z.boolean().optional().default(false),
   isArchived: z.boolean().optional().default(false),
 });
@@ -82,8 +85,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           images: initialData.images ?? [],
           price: parseFloat(String(initialData.price)),
           categoryId: initialData.categoryId,
-          colorId: initialData.colorId,
-          sizeId: initialData.sizeId,
+          colorIds: initialData.colors?.map((c) => c.id) ?? [],
+          sizeIds: initialData.sizes?.map((s) => s.id) ?? [],
           isFeatured: initialData.isFeatured ?? false,
           isArchived: initialData.isArchived ?? false,
         }
@@ -92,8 +95,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           images: [],
           price: 0,
           categoryId: "",
-          colorId: "",
-          sizeId: "",
+          colorIds: [],
+          sizeIds: [],
           isFeatured: false,
           isArchived: false,
         },
@@ -114,7 +117,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       router.push(`/${params.storeId}/products`);
       toast.success(toastMessage);
     } catch (error) {
-      toast.error("Error updating product:");
+      console.log(data);
+      toast.error("Error updating/creating product:");
     } finally {
       setLoading(false);
     }
@@ -174,23 +178,28 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               <FormItem>
                 <FormLabel>Images</FormLabel>
                 <FormControl>
-                  <ImageUpload
+                  <ImageUpload<string[]>
                     disabled={loading}
-                    onChange={(url) =>
-                      field.onChange([...field.value, { url }])
-                    }
-                    onRemove={(url) =>
-                      field.onChange([
-                        ...field.value.filter((image) => image.url !== url),
-                      ])
-                    }
-                    value={field.value.map((image) => image.url)}
+                    value={field.value.map(
+                      (image: { url: string }) => image.url
+                    )}
+                    onChange={(urls: any) => {
+                      console.log("onChange array:", urls);
+                      field.onChange(urls.map((url: string) => ({ url })));
+                    }}
+                    onRemove={(url: any) => {
+                      const filtered = field.value.filter(
+                        (image: { url: string }) => image.url !== url
+                      );
+                      field.onChange(filtered);
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <div className="grid md:grid-cols-3 gap-8">
             <FormField
               control={form.control}
@@ -263,68 +272,83 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             />
             <FormField
               control={form.control}
-              name="sizeId"
-              render={({ field }) => (
+              name="sizeIds"
+              render={() => (
                 <FormItem>
-                  <FormLabel>Size</FormLabel>
-
-                  <Select
-                    disabled={loading}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Select a size"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {sizes.map((size) => (
-                        <SelectItem key={size.id} value={size.id}>
-                          {size.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-
+                  <FormLabel>Sizes</FormLabel>
+                  <div className="flex flex-wrap gap-3">
+                    {sizes.map((size) => (
+                      <FormField
+                        key={size.id}
+                        control={form.control}
+                        name="sizeIds"
+                        render={({ field }) => (
+                          <FormItem
+                            key={size.id}
+                            className="flex flex-row items-center space-x-2"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(size.id)}
+                                onCheckedChange={(checked) => {
+                                  return checked
+                                    ? field.onChange([...field.value, size.id])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (val) => val !== size.id
+                                        )
+                                      );
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel>{size.name}</FormLabel>
+                          </FormItem>
+                        )}
+                      />
+                    ))}
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
-              name="colorId"
-              render={({ field }) => (
+              name="colorIds"
+              render={() => (
                 <FormItem>
-                  <FormLabel>Color</FormLabel>
-
-                  <Select
-                    disabled={loading}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Select a color"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {colors.map((color) => (
-                        <SelectItem key={color.id} value={color.id}>
-                          {color.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-
+                  <FormLabel>Colors</FormLabel>
+                  <div className="flex flex-wrap gap-3">
+                    {colors.map((color) => (
+                      <FormField
+                        key={color.id}
+                        control={form.control}
+                        name="colorIds"
+                        render={({ field }) => (
+                          <FormItem
+                            key={color.id}
+                            className="flex flex-row items-center space-x-2"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(color.id)}
+                                onCheckedChange={(checked) => {
+                                  return checked
+                                    ? field.onChange([...field.value, color.id])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (val) => val !== color.id
+                                        )
+                                      );
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel>{color.name}</FormLabel>
+                          </FormItem>
+                        )}
+                      />
+                    ))}
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
